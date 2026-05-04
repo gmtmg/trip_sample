@@ -1593,7 +1593,8 @@ footer .copy{
 </div>
 <style>
 .modal-overlay{
-  position: fixed; inset: 0; z-index: 200;
+  position: absolute; z-index: 200;
+  left: 0; width: 100%;
   background: radial-gradient(circle at 50% 50%, rgba(216,30,26,.55), rgba(26,8,5,.85));
   backdrop-filter: blur(6px);
   display: none; align-items: center; justify-content: center;
@@ -1667,8 +1668,13 @@ footer .copy{
 <script>
 (function(){
   const modal = document.getElementById('reserveModal');
+  function positionModal(){
+    modal.style.top = window.scrollY + 'px';
+    modal.style.height = window.innerHeight + 'px';
+  }
   function open(){
     if(!modal) return;
+    positionModal();
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
