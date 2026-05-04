@@ -151,7 +151,12 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
 
 /* radiating sunburst */
 .sunburst{
-  position:absolute; inset:-30%;
+  position:absolute;
+  top:50%; left:50%;
+  width: 150vmax; height: 150vmax;
+  transform-origin: center center;
+  margin-top: -75vmax; margin-left: -75vmax;
+  border-radius:50%;
   z-index:-2;
   background: conic-gradient(
     from 0deg,
