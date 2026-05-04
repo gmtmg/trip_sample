@@ -1,0 +1,1945 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<title>TRIP — Tacos &amp; Mezcal · 京町堀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Bungee&family=Bungee+Shade&family=Space+Mono:wght@400;700&family=Shippori+Mincho:wght@500;700;800&family=Rampart+One&family=Reenie+Beanie&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --red:#E81B16;
+  --red-deep:#7E1A0E;
+  --red-ink:#2A0805;
+  --yellow:#F2D016;
+  --yellow-soft:#E5C015;
+  --cream:#FFE873;
+  --paper:#F2D016;
+  --ink:#1A0805;
+  --hot:#FF4A00;
+  --magenta:#C8125E;
+  --hue: 0deg;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{background:var(--paper); color:var(--ink); overflow-x:hidden;}
+body{
+  font-family:"Shippori Mincho", serif;
+  font-weight:600;
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(216,30,26,0.18), transparent 45%),
+    radial-gradient(ellipse at 82% 88%, rgba(216,30,26,0.16), transparent 50%),
+    radial-gradient(circle at 1px 1px, rgba(42,8,5,0.10) 1px, transparent 1.4px);
+  background-size: 100% 100%, 100% 100%, 26px 26px;
+  filter: hue-rotate(var(--hue));
+  transition: filter .2s linear;
+}
+img{display:block; max-width:100%;}
+a{color:inherit; text-decoration:none;}
+button{font:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+
+/* ========== Cursor afterglow ========== */
+.glow{
+  position:fixed;
+  pointer-events:none;
+  width: 380px; height: 380px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,74,0,.45), rgba(232,27,22,.18) 30%, transparent 60%);
+  mix-blend-mode: multiply;
+  transform: translate(-50%,-50%);
+  z-index: 100;
+  filter: blur(20px);
+}
+
+/* ========== Top scrolling ticker ========== */
+.tickerbar{
+  background:var(--ink);
+  color:var(--yellow);
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:13px;
+  letter-spacing:0.18em;
+  padding:10px 0;
+  overflow:hidden;
+  border-bottom:3px solid var(--red);
+  position:relative;
+  z-index:50;
+}
+.ticker-track{
+  display:flex; gap:48px; white-space:nowrap;
+  animation: scroll-left 40s linear infinite;
+  width:max-content;
+}
+.ticker-track > span{display:inline-flex; align-items:center; gap:48px;}
+.ticker-track .dot{
+  display:inline-block; width:7px; height:7px; border-radius:50%;
+  background: var(--red);
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+@keyframes pulse{ to{ transform: scale(1.6); opacity:.5; } }
+@keyframes scroll-left{
+  from{transform:translateX(0);} to{transform:translateX(-50%);}
+}
+
+/* ========== Nav ========== */
+.nav{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 28px;
+  background: rgba(242,208,22,0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 3px solid var(--red);
+}
+.nav-brand{
+  display:flex; align-items:center; gap:14px;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:26px;
+  letter-spacing:.04em;
+  color: var(--red);
+}
+.nav-brand img{
+  width:46px; height:46px; border-radius:50%;
+  animation: spin 12s linear infinite;
+}
+.nav-links{display:flex; gap:4px; flex-wrap:wrap;}
+.nav-links a{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:14px; letter-spacing:0.10em;
+  padding:9px 16px; color: var(--red);
+  border-radius:999px;
+  transition: color .2s, background .2s, transform .2s;
+}
+.nav-links a:hover{ color: var(--paper); background: var(--red); transform: rotate(-3deg);}
+.nav-cta{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:13px; letter-spacing:0.12em;
+  background:var(--red); color:var(--paper);
+  padding:11px 22px; border-radius:999px;
+  transition: transform .2s;
+}
+.nav-cta:hover{ transform: rotate(-4deg) scale(1.05); }
+
+/* ========== HERO ========== */
+.hero{
+  position:relative;
+  min-height: 100vh;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 50%, var(--cream), var(--paper) 40%, var(--yellow-soft) 100%);
+}
+
+/* concentric pulsing rings */
+.rings{
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:
+    repeating-radial-gradient(circle at 50% 50%,
+      transparent 0 28px,
+      rgba(232,27,22,.18) 28px 32px,
+      transparent 32px 56px,
+      rgba(126,26,14,.12) 56px 60px);
+  animation: ringpulse 6s ease-in-out infinite;
+  mask: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+}
+@keyframes ringpulse{
+  0%,100%{ transform: scale(1); opacity:.85; }
+  50%{ transform: scale(1.15); opacity:.55; }
+}
+
+/* radiating sunburst */
+.sunburst{
+  position:absolute; inset:-30%;
+  z-index:-2;
+  background: conic-gradient(
+    from 0deg,
+    var(--red) 0 18deg, transparent 18deg 36deg,
+    var(--red) 36deg 54deg, transparent 54deg 72deg,
+    var(--red) 72deg 90deg, transparent 90deg 108deg,
+    var(--red) 108deg 126deg, transparent 126deg 144deg,
+    var(--red) 144deg 162deg, transparent 162deg 180deg,
+    var(--red) 180deg 198deg, transparent 198deg 216deg,
+    var(--red) 216deg 234deg, transparent 234deg 252deg,
+    var(--red) 252deg 270deg, transparent 270deg 288deg,
+    var(--red) 288deg 306deg, transparent 306deg 324deg,
+    var(--red) 324deg 342deg, transparent 342deg 360deg
+  );
+  opacity:.5;
+  animation: spin 60s linear infinite;
+  mask-image: radial-gradient(circle at 50% 50%, black 12%, transparent 65%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 12%, transparent 65%);
+}
+@keyframes spin{ to{ transform: rotate(360deg);} }
+
+/* logo mandala — rotating ring of small logos */
+.mandala{
+  position:absolute; inset:0;
+  z-index:-1; pointer-events:none;
+  display:flex; align-items:center; justify-content:center;
+}
+.mandala-ring{
+  width: 90vmin; height: 90vmin;
+  position:relative;
+  animation: spin 50s linear infinite;
+}
+.mandala-ring img{
+  position:absolute;
+  width: 70px; height:70px;
+  border-radius:50%;
+  top: 50%; left: 50%;
+  margin: -35px 0 0 -35px;
+  filter: drop-shadow(2px 2px 0 var(--ink));
+  opacity:.85;
+}
+.mandala-ring.inner{ width: 56vmin; height: 56vmin; animation-direction: reverse; animation-duration: 38s;}
+.mandala-ring.inner img{ width:46px; height:46px; margin:-23px 0 0 -23px; opacity:.9;}
+
+.hero-inner{
+  text-align:center;
+  padding: 80px 24px 90px;
+  position:relative;
+  max-width: 1200px;
+  width:100%;
+  z-index: 5;
+}
+.kicker{
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:"Bagel Fat One", sans-serif;
+  background: var(--red); color: var(--paper);
+  padding:8px 18px;
+  border-radius: 999px;
+  font-size:14px; letter-spacing:0.18em;
+  margin-bottom:34px;
+  transform: rotate(-2deg);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.hero h1{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: clamp(96px, 19vw, 280px);
+  line-height: 0.9;
+  color: var(--red);
+  letter-spacing: -0.01em;
+  margin: 0 auto;
+  max-width: 9ch;
+  position: relative;
+}
+.hero h1 .wave-letter{
+  display:inline-block;
+  position: relative;
+  text-shadow:
+     6px 6px 0 var(--magenta),
+     12px 12px 0 var(--ink);
+  animation: trippy 4s ease-in-out infinite;
+}
+.hero h1 .wave-letter::before,
+.hero h1 .wave-letter::after{
+  content: attr(data-l);
+  position: absolute; inset: 0;
+  pointer-events:none;
+}
+.hero h1 .wave-letter::before{
+  color: var(--hot);
+  transform: translate(-6px, 0);
+  mix-blend-mode: multiply;
+  opacity:.7;
+  animation: chroma1 3s ease-in-out infinite;
+}
+.hero h1 .wave-letter::after{
+  color: var(--magenta);
+  transform: translate(6px, 0);
+  mix-blend-mode: multiply;
+  opacity:.7;
+  animation: chroma2 3s ease-in-out infinite;
+}
+.hero h1 .wave-letter:nth-child(1){ animation-delay: .0s; }
+.hero h1 .wave-letter:nth-child(2){ animation-delay: .2s; }
+.hero h1 .wave-letter:nth-child(3){ animation-delay: .4s; }
+.hero h1 .wave-letter:nth-child(4){ animation-delay: .6s; }
+@keyframes trippy{
+  0%,100%{ transform: translateY(0) rotate(0) scale(1); }
+  25%{ transform: translateY(-14px) rotate(-2deg) scale(1.04); }
+  50%{ transform: translateY(0) rotate(2deg) scale(.98); }
+  75%{ transform: translateY(8px) rotate(-1deg) scale(1.02); }
+}
+@keyframes chroma1{
+  0%,100%{ transform: translate(-6px, 0); }
+  50%{ transform: translate(-12px, 4px); }
+}
+@keyframes chroma2{
+  0%,100%{ transform: translate(6px, 0); }
+  50%{ transform: translate(12px, -4px); }
+}
+
+.hero-sub{
+  margin-top: 28px;
+  font-family:"Shrikhand", serif;
+  font-size: clamp(22px, 3.4vw, 40px);
+  color: var(--ink);
+  letter-spacing:0.01em;
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+.hero-jp{
+  margin-top:18px;
+  font-family:"Shippori Mincho", serif;
+  font-weight: 800;
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: var(--red-ink);
+  letter-spacing:0.22em;
+}
+
+/* motto banner under hero */
+.motto{
+  margin-top: 38px;
+  display: inline-block;
+  font-family:"Reenie Beanie", cursive;
+  font-size: clamp(28px, 4vw, 56px);
+  color: var(--ink);
+  background: linear-gradient(90deg, transparent, var(--cream) 30%, var(--cream) 70%, transparent);
+  padding: 10px 30px;
+  transform: rotate(-2deg);
+  letter-spacing: .02em;
+}
+.motto em{
+  font-style: normal;
+  color: var(--red);
+}
+
+.hero-actions{
+  margin-top:34px;
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+}
+.btn{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:15px; letter-spacing:0.14em;
+  padding:18px 30px;
+  border-radius:999px;
+  border: none;
+  background: var(--paper);
+  color: var(--red);
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn:hover{ transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--ink); }
+.btn-primary{ background: var(--red); color: var(--paper); }
+.btn-primary:hover{ background: var(--red-deep); }
+
+/* ========== Section title ========== */
+.section{ padding: 110px 28px; position:relative; }
+.section-title{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: clamp(64px, 11vw, 170px);
+  line-height: .9;
+  text-align:center;
+  color: var(--red);
+  text-shadow:
+    3px 3px 0 var(--magenta),
+    6px 6px 0 var(--ink);
+  margin-bottom: 8px;
+  letter-spacing:-.02em;
+}
+.section-sub{
+  text-align:center;
+  font-family:"Shrikhand", serif;
+  font-size: clamp(20px, 2.6vw, 30px);
+  color: var(--ink);
+  margin-bottom: 50px;
+  letter-spacing:.01em;
+  transform: rotate(-1deg);
+  display: block;
+}
+.section-rule{
+  margin: 12px auto 50px;
+  width: 220px; height: 14px;
+  background-image: radial-gradient(circle, var(--red) 2px, transparent 2.4px);
+  background-size: 18px 18px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity:.7;
+}
+
+/* ========== Diagonal banner ========== */
+.diagonal{
+  background: var(--red);
+  color: var(--paper);
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: clamp(20px, 2.8vw, 32px);
+  letter-spacing: 0.12em;
+  padding: 20px 0;
+  overflow:hidden;
+  border-top: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  transform: rotate(-2deg);
+  margin: -20px 0;
+  position:relative; z-index:5;
+}
+.diagonal .ticker-track > span{ gap:60px; }
+.diagonal .star{ color: var(--paper); font-size:.9em; }
+
+/* ========== MENU ========== */
+.menu-section{
+  background: var(--red);
+  color: var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+.menu-section::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    repeating-radial-gradient(circle at 50% 50%,
+      transparent 0 60px,
+      rgba(242,208,22,.10) 60px 64px);
+  animation: ringpulse 8s ease-in-out infinite;
+  pointer-events:none;
+}
+.menu-section .section-title{
+  color: var(--paper);
+  text-shadow:
+    3px 3px 0 var(--yellow-soft),
+    6px 6px 0 var(--ink);
+}
+.menu-section .section-sub{ color: var(--paper); }
+
+.menu-grid{
+  max-width: 1200px;
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  position:relative;
+}
+.menu-card{
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 28px;
+  padding: 26px 24px 24px;
+  position:relative;
+  box-shadow: 8px 8px 0 var(--ink);
+  transform: rotate(var(--tilt, -1.5deg));
+  transition: transform .3s, box-shadow .3s;
+}
+.menu-card:hover{
+  transform: rotate(0) translateY(-4px);
+  box-shadow: 14px 14px 0 var(--ink);
+}
+.menu-card:nth-child(2n){ --tilt: 1.5deg; }
+.menu-card:nth-child(3n){ --tilt: -2deg; }
+.menu-card:nth-child(5n){ --tilt: 1.8deg; }
+
+.menu-tag{
+  position:absolute; top:-14px; left:18px;
+  background:var(--ink); color:var(--paper);
+  font-family:"Bagel Fat One", sans-serif; font-size:11px;
+  padding:6px 12px;
+  letter-spacing:.16em;
+  border-radius:999px;
+}
+.menu-img{
+  width:100%; aspect-ratio: 4/3;
+  border:3px solid var(--ink);
+  border-radius: 18px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+  background: #1a0805;
+  display:flex; align-items:center; justify-content:center;
+}
+.menu-img img.menu-photo{
+  width:100%; height:100%; object-fit:cover;
+  display:block;
+  filter: saturate(1.05) contrast(1.05);
+}
+.menu-img .glyph{
+  position:absolute; top:10px; right:12px;
+  width: 32px; height: 32px;
+  color: var(--paper);
+  z-index: 2;
+  filter: drop-shadow(1px 1px 0 var(--ink));
+}
+.menu-items{
+  margin-top: 14px;
+  border-top: 2px dashed var(--ink);
+  padding-top: 14px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.menu-item{
+  display: flex; flex-direction: column; gap: 2px;
+}
+.menu-item-name{
+  font-family:"Shippori Mincho", serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: .02em;
+}
+.menu-item-name::before{
+  content: "✺ ";
+  color: var(--red);
+  font-size: 12px;
+}
+.menu-item-desc{
+  font-family:"Shippori Mincho", serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: .78;
+  padding-left: 16px;
+}
+
+.menu-name{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 22px;
+  letter-spacing:.02em;
+  color: var(--red);
+  display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+}
+.menu-name .price{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:16px;
+  color: var(--ink);
+  white-space:nowrap;
+  background: var(--yellow-soft);
+  padding: 2px 12px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  letter-spacing:.04em;
+}
+.menu-jp{
+  font-family:"Shippori Mincho", serif;
+  font-size: 13px;
+  color: var(--red-deep);
+  margin-top: 6px;
+  letter-spacing: .1em;
+  font-weight:800;
+}
+.menu-desc{
+  margin-top:12px;
+  font-family:"Shippori Mincho", serif;
+  font-weight:600;
+  font-size:14px;
+  line-height:1.7;
+  color: var(--ink);
+}
+.menu-spice{
+  margin-top:14px;
+  display:flex; align-items:center; gap:10px;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 11px;
+  letter-spacing:.18em;
+  color: var(--red);
+  border-top: 2px dashed var(--ink);
+  padding-top: 12px;
+}
+.spice-dot{
+  width:12px; height:12px; border-radius:50%;
+  background: var(--red);
+  border:2px solid var(--ink);
+}
+.spice-dot.off{ background:var(--paper); }
+
+/* ========== About / Motto ========== */
+.about{
+  background: var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+.about::before{
+  content:""; position:absolute; inset:0;
+  background:
+    repeating-radial-gradient(circle at 80% 20%,
+      transparent 0 50px,
+      rgba(216,30,26,.08) 50px 54px),
+    repeating-radial-gradient(circle at 20% 80%,
+      transparent 0 70px,
+      rgba(126,26,14,.06) 70px 74px);
+  pointer-events:none;
+}
+.about-wrap{
+  max-width: 1100px; margin: 0 auto;
+  display:grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 70px;
+  align-items:center;
+  position:relative;
+}
+.about-text h3{
+  font-family:"Shrikhand", serif;
+  font-weight:400;
+  font-size: clamp(36px, 5vw, 60px);
+  color: var(--red);
+  line-height:1.1;
+  margin-bottom: 24px;
+}
+.about-text p{
+  font-family:"Shippori Mincho", serif;
+  font-weight:600;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.about-quote{
+  margin-top: 30px;
+  font-family:"Reenie Beanie", cursive;
+  font-size: 36px;
+  color: var(--red);
+  border-left: 4px solid var(--red);
+  padding: 6px 0 6px 18px;
+  letter-spacing:.02em;
+  line-height: 1.1;
+}
+.about-quote small{
+  display:block;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: .2em;
+  margin-top: 6px;
+}
+.about-visual{
+  position:relative;
+  aspect-ratio: 1/1;
+  display:flex; align-items:center; justify-content:center;
+}
+.about-visual .ring{
+  position:absolute; inset:5%;
+  border-radius:50%;
+  background: repeating-conic-gradient(
+    var(--red) 0 9deg, transparent 9deg 18deg
+  );
+  animation: spin 60s linear infinite reverse;
+  mask: radial-gradient(circle, transparent 60%, black 62%, black 88%, transparent 90%);
+  -webkit-mask: radial-gradient(circle, transparent 60%, black 62%, black 88%, transparent 90%);
+}
+.about-visual .ring2{
+  position:absolute; inset:14%;
+  border-radius:50%;
+  border: 2px dashed var(--red);
+  animation: spin 80s linear infinite;
+  opacity:.7;
+}
+.about-visual .ring3{
+  position:absolute; inset:-5%;
+  border-radius:50%;
+  border: 2px solid var(--red-deep);
+  animation: spin 120s linear infinite reverse;
+  opacity:.4;
+}
+.about-visual img{
+  width:78%; aspect-ratio: 1/1;
+  position:relative; z-index:2;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  animation: bob 6s ease-in-out infinite;
+}
+@keyframes bob{
+  0%,100%{ transform: translateY(0) rotate(-3deg); }
+  50%{ transform: translateY(-14px) rotate(3deg); }
+}
+
+/* ========== BIG MOTTO STRIP ========== */
+.motto-strip{
+  background: var(--ink);
+  color: var(--paper);
+  text-align:center;
+  padding: 100px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.motto-strip::before{
+  content:""; position:absolute; inset:0;
+  background:
+    conic-gradient(from 0deg, var(--red) 0 30deg, transparent 30deg 60deg,
+      var(--red) 60deg 90deg, transparent 90deg 120deg,
+      var(--red) 120deg 150deg, transparent 150deg 180deg,
+      var(--red) 180deg 210deg, transparent 210deg 240deg,
+      var(--red) 240deg 270deg, transparent 270deg 300deg,
+      var(--red) 300deg 330deg, transparent 330deg 360deg);
+  opacity: .15;
+  animation: spin 80s linear infinite;
+  mask: radial-gradient(circle at 50% 50%, black 5%, transparent 70%);
+  -webkit-mask: radial-gradient(circle at 50% 50%, black 5%, transparent 70%);
+}
+.motto-strip .big{
+  font-family:"Rampart One", sans-serif;
+  font-size: clamp(40px, 8vw, 110px);
+  line-height: 1;
+  color: var(--yellow);
+  letter-spacing:-.01em;
+  position:relative;
+  text-shadow:
+    4px 4px 0 var(--red),
+    8px 8px 0 var(--red-deep);
+}
+.motto-strip .big em{
+  font-style: normal;
+  color: var(--red);
+  font-family: "Bagel Fat One", sans-serif;
+  text-shadow:
+    4px 4px 0 var(--yellow),
+    8px 8px 0 var(--paper);
+}
+.motto-strip .small{
+  margin-top: 30px;
+  font-family:"Shrikhand", serif;
+  font-size: clamp(18px, 2.4vw, 24px);
+  color: var(--paper);
+  position:relative;
+}
+
+/* ========== INFO (店舗情報) ========== */
+.visit{
+  background: var(--ink);
+  color: var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+.visit::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(242,208,22,.10) 1px, transparent 1.4px);
+  background-size: 24px 24px;
+  pointer-events:none;
+}
+.visit::after{
+  content:""; position:absolute;
+  width: 700px; height:700px;
+  border-radius:50%;
+  border: 2px dashed rgba(242,208,22,.25);
+  top: -250px; right:-250px;
+  animation: spin 200s linear infinite;
+  pointer-events:none;
+}
+.visit .section-title{
+  color: var(--paper);
+  text-shadow:
+    3px 3px 0 var(--red),
+    6px 6px 0 var(--red-deep);
+}
+.visit .section-sub{ color: var(--paper); opacity:.9;}
+
+.info-stack{
+  max-width: 1180px; margin: 0 auto;
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 28px;
+  position:relative;
+}
+.info-stack .span-4{ grid-column: span 4; }
+.info-stack .span-6{ grid-column: span 6; }
+.info-stack .span-8{ grid-column: span 8; }
+.info-stack .full{ grid-column: 1 / -1; }
+@media (max-width: 880px){
+  .info-stack{ grid-template-columns: 1fr; }
+  .info-stack .span-4, .info-stack .span-6, .info-stack .span-8{ grid-column: 1 / -1; }
+}
+
+.cat-head{
+  display:flex; align-items:center; gap: 14px;
+  margin-bottom: 18px;
+}
+.cat-head .num{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 14px;
+  background: var(--ink); color: var(--paper);
+  width: 30px; height: 30px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius: 999px;
+  letter-spacing: 0;
+}
+.cat-head .ttl{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 17px;
+  color: var(--red);
+  letter-spacing: .08em;
+  line-height:1;
+}
+.cat-head .ttl small{
+  display:block;
+  font-family:"Shippori Mincho", serif;
+  font-size: 11px;
+  color: var(--ink);
+  margin-top: 4px;
+  letter-spacing: .12em;
+  opacity: .7;
+}
+
+.kv{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding: 10px 0;
+  border-bottom: 2px dashed rgba(26,8,5,.25);
+  font-family:"Shippori Mincho", serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+.kv:last-child{ border-bottom: none; }
+.kv .k{ color: var(--red); letter-spacing: .04em; }
+.kv .v{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: .04em;
+}
+.kv .v.big{ font-size: 22px; color: var(--red); }
+
+.pay-block{ margin-top: 4px; }
+.pay-block + .pay-block{
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px dashed rgba(26,8,5,.25);
+}
+.pay-block .pay-lbl{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 12px;
+  color: var(--red);
+  letter-spacing: .14em;
+  margin-bottom: 8px;
+}
+
+.seat-visual{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  background: var(--cream);
+  border: 2px dashed var(--ink);
+  border-radius: 12px;
+  padding: 12px;
+}
+.seat{
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  background: var(--red);
+  border: 2px solid var(--ink);
+  position:relative;
+}
+.seat.counter{ background: var(--paper); }
+.seat.t4{ background: var(--red); }
+.seat.t2{ background: var(--red-deep); }
+.seat-key{
+  margin-top: 12px;
+  display:flex; flex-wrap:wrap; gap: 10px;
+  font-family:"Shippori Mincho", serif;
+  font-weight:700;
+  font-size: 12px;
+}
+.seat-key span{ display:inline-flex; align-items:center; gap:6px;}
+.seat-key i{
+  display:inline-block; width:12px; height:12px;
+  border:1.5px solid var(--ink); border-radius: 3px;
+}
+.info-card{
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  padding: 36px 32px;
+  position:relative;
+  box-shadow: 8px 8px 0 var(--red);
+}
+.info-card h4{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 18px;
+  color: var(--red);
+  margin-bottom: 22px;
+  display:flex; align-items:center; gap:14px;
+  letter-spacing: .12em;
+}
+.info-card h4::before{
+  content:""; display:inline-block;
+  width: 14px; height: 14px;
+  background:
+    conic-gradient(var(--red) 0 90deg, var(--red-deep) 90deg 180deg, var(--red) 180deg 270deg, var(--red-deep) 270deg 360deg);
+  transform: rotate(45deg);
+  animation: spin 8s linear infinite;
+}
+.hours-row{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding: 12px 0;
+  border-bottom: 2px dashed rgba(26,8,5,.3);
+  font-family:"Shippori Mincho", serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing:.05em;
+}
+.hours-row:last-child{ border-bottom:none; }
+.hours-row .day{ color: var(--red); }
+.hours-row .time{ font-family:"Bagel Fat One", sans-serif; font-size: 14px; letter-spacing:.06em; }
+.note{
+  margin-top: 14px;
+  font-family:"Shippori Mincho", serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--red-deep);
+  border-top: 2px dashed rgba(26,8,5,.3);
+  padding-top: 12px;
+}
+.address-block{
+  font-family:"Shippori Mincho", serif;
+  font-weight:700;
+  font-size: 15px;
+  line-height:1.95;
+  color: var(--ink);
+}
+.address-block strong{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:22px;
+  color: var(--red);
+  display:block;
+  margin-bottom:8px;
+  letter-spacing:.05em;
+  font-weight:400;
+}
+.access-list{
+  margin-top: 14px;
+  list-style:none; display:grid; gap: 10px;
+}
+.access-list li{
+  display:flex; align-items:flex-start; gap: 10px;
+  font-family:"Shippori Mincho", serif;
+  font-weight:700;
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 8px 12px;
+  background: var(--cream);
+  border-radius: 10px;
+  border: 2px solid var(--ink);
+}
+.access-list li .badge{
+  flex: 0 0 auto;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--paper);
+  background: var(--red);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.map-pic{
+  margin-top:20px;
+  height: 220px;
+  border:3px solid var(--ink);
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg, transparent 0 49%, rgba(26,8,5,.22) 49% 51%, transparent 51% 100%) 0 0/40px 100%,
+    linear-gradient(0deg, transparent 0 49%, rgba(26,8,5,.22) 49% 51%, transparent 51% 100%) 0 0/100% 40px,
+    radial-gradient(circle at 30% 70%, rgba(216,30,26,.18), transparent 40%),
+    var(--cream);
+  position:relative;
+  overflow:hidden;
+}
+.map-pic .pin{
+  position:absolute; top:50%; left:50%;
+  transform: translate(-50%,-100%);
+  background: var(--red); color: var(--paper);
+  font-family:"Bagel Fat One", sans-serif; font-size:13px;
+  padding: 8px 14px;
+  letter-spacing:.10em;
+  border:2px solid var(--ink);
+  border-radius: 999px;
+}
+.map-pic .pin::after{
+  content:""; position:absolute;
+  bottom:-10px; left: 50%; transform: translateX(-50%);
+  border:7px solid transparent;
+  border-top-color: var(--ink);
+}
+
+/* facts grid (payment / seats / smoking) */
+.facts{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.fact{
+  background: var(--cream);
+  border:2px solid var(--ink);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.fact .lbl{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing:.18em;
+  margin-bottom: 8px;
+}
+.fact .val{
+  font-family:"Shippori Mincho", serif;
+  font-weight:700;
+  font-size:14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.chip-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.chip{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 10px;
+  letter-spacing:.1em;
+  background: var(--paper);
+  color: var(--ink);
+  border:1.5px solid var(--ink);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* ========== VIBE reviews ========== */
+.review-grid{
+  max-width: 1240px; margin: 0 auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 36px;
+  position:relative;
+}
+.review{
+  background: var(--paper);
+  color: var(--ink);
+  border:3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 8px 8px 0 var(--red-deep);
+  transform: rotate(var(--tilt, -1.5deg));
+  font-family:"Shippori Mincho", serif;
+  font-weight:600;
+  font-size:14.5px; line-height:1.85;
+  position:relative;
+  overflow: hidden;
+  display:flex; flex-direction:column;
+}
+.review:nth-child(2n){ --tilt: 1.5deg; box-shadow: 8px 8px 0 var(--red); }
+.review:nth-child(3n){ --tilt: -2deg; box-shadow: 8px 8px 0 var(--red-deep); }
+.review-photos{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  border-bottom: 3px solid var(--ink);
+}
+.review-photos img{
+  width:100%; aspect-ratio: 1/1.05;
+  object-fit: cover;
+  display:block;
+  filter: contrast(1.05) saturate(1.1);
+}
+.review-body{ padding: 22px 24px 22px; flex: 1; display:flex; flex-direction:column;}
+.review .stars{
+  color: var(--red);
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:18px;
+  letter-spacing:.18em;
+  margin-bottom:6px;
+}
+.review .who{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:13px;
+  color: var(--red);
+  letter-spacing:.14em;
+  margin-bottom: 12px;
+}
+.review .summary{ margin-bottom: 14px; }
+.review-detail{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s ease;
+}
+.review-detail-inner{
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 2px dashed var(--ink);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.review.open .review-detail{ max-height: 1800px; }
+.review-toggle{
+  margin-top: auto;
+  align-self: flex-start;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 12px;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 9px 18px;
+  border-radius: 999px;
+  letter-spacing: .14em;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .2s;
+}
+.review-toggle:hover{ background: var(--red); transform: rotate(-2deg); }
+.review.open .review-toggle{ background: var(--red); }
+.review-toggle::after{
+  content: " ▾";
+  display: inline-block;
+  transition: transform .3s;
+}
+.review.open .review-toggle::after{ transform: rotate(180deg); }
+
+/* (legacy) */
+.vibe{
+  background: var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+.vibe::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(216,30,26,.10), transparent 60%);
+  pointer-events:none;
+}
+.vibe .section-title{ color: var(--red);}
+.vibe .section-sub{ color: var(--ink); }
+.review-grid{
+  max-width: 1200px; margin: 0 auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  position:relative;
+}
+.review{
+  background: var(--paper);
+  color: var(--ink);
+  padding: 28px 26px;
+  border:3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 6px 6px 0 var(--red-deep);
+  transform: rotate(var(--tilt, -1.5deg));
+  font-family:"Shippori Mincho", serif;
+  font-weight:600;
+  font-size:15px; line-height:1.85;
+  position:relative;
+}
+.review:nth-child(2n){ --tilt: 1.5deg; }
+.review:nth-child(3n){ --tilt: -2deg; }
+.review .stars{
+  color: var(--red);
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:18px;
+  letter-spacing:.18em;
+  margin-bottom:10px;
+}
+.review .who{
+  margin-top:18px;
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:12px;
+  color: var(--red);
+  letter-spacing:.14em;
+  border-top: 2px dashed var(--ink);
+  padding-top: 12px;
+}
+
+/* ========== CTA ========== */
+.cta-strip{
+  background: var(--red);
+  color: var(--paper);
+  text-align:center;
+  padding: 110px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.cta-strip::before{
+  content:""; position:absolute; inset:0;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%, var(--red-deep) 0 6deg, transparent 6deg 12deg);
+  opacity:.2;
+  animation: spin 90s linear infinite;
+}
+.cta-strip h2{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: clamp(56px, 10vw, 150px);
+  line-height: .92;
+  color: var(--paper);
+  text-shadow:
+    4px 4px 0 var(--magenta),
+    8px 8px 0 var(--ink);
+  letter-spacing:-.01em;
+  position:relative;
+}
+.cta-strip p{
+  margin-top: 22px;
+  font-family:"Shrikhand", serif;
+  font-size: clamp(20px, 2.8vw, 28px);
+  color: var(--paper);
+  position:relative;
+}
+.cta-strip .btn{ margin-top: 36px; position:relative;}
+.cta-strip .btn-primary{ background: var(--paper); color: var(--red); }
+.cta-strip .btn-primary:hover{ background: var(--cream); color: var(--red-deep);}
+.cta-reserve-btn{
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ========== Footer ========== */
+footer{
+  background: var(--ink);
+  color: var(--paper);
+  padding: 60px 24px 28px;
+  text-align:center;
+  font-family:"Shippori Mincho", serif;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.04em;
+  position:relative;
+}
+footer .foot-logo{
+  width:72px; margin:0 auto 18px;
+  border-radius:50%;
+  animation: spin 16s linear infinite;
+}
+footer .foot-name{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:24px;
+  letter-spacing:.18em;
+  color: var(--paper);
+}
+footer .foot-tag{
+  margin-top:8px;
+  font-family:"Reenie Beanie", cursive;
+  color: var(--yellow);
+  opacity:.95;
+  font-size: 22px;
+}
+footer .socials{
+  display:flex; justify-content:center; gap:8px;
+  margin: 22px 0 8px; flex-wrap:wrap;
+}
+footer .socials a{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size:11px;
+  border:2px solid var(--paper);
+  padding: 8px 18px;
+  letter-spacing:.14em;
+  border-radius: 999px;
+  color: var(--paper);
+  transition: background .2s, color .2s;
+}
+footer .socials a:hover{ background: var(--paper); color: var(--ink);}
+footer .copy{
+  opacity:.5; margin-top: 22px;
+  font-family:"Shippori Mincho", serif;
+  font-size:12px;
+  letter-spacing:.08em;
+}
+
+@media (max-width: 880px){
+  .about-wrap, .info-stack{ grid-template-columns: 1fr; gap: 32px;}
+  .info-stack .full{ grid-column: auto; }
+  .nav-links{ display:none; }
+  .section{ padding: 80px 20px; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="aztec-star" viewBox="0 0 60 60">
+      <g fill="currentColor">
+        <path d="M30 2 L34 24 L56 28 L34 32 L30 56 L26 32 L4 28 L26 24 Z"/>
+        <circle cx="30" cy="30" r="3"/>
+      </g>
+    </symbol>
+    <symbol id="sun-ray" viewBox="0 0 80 80">
+      <g fill="currentColor"><circle cx="40" cy="40" r="12"/></g>
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M40 4 L40 18"/><path d="M40 76 L40 62"/>
+        <path d="M4 40 L18 40"/><path d="M76 40 L62 40"/>
+        <path d="M14 14 L24 24"/><path d="M66 66 L56 56"/>
+        <path d="M66 14 L56 24"/><path d="M14 66 L24 56"/>
+      </g>
+    </symbol>
+    <symbol id="cactus" viewBox="0 0 40 60">
+      <g fill="currentColor">
+        <rect x="17" y="12" width="6" height="46" rx="3"/>
+        <rect x="6" y="22" width="6" height="20" rx="3"/>
+        <rect x="6" y="22" width="13" height="6" rx="3"/>
+        <rect x="28" y="18" width="6" height="22" rx="3"/>
+        <rect x="21" y="18" width="13" height="6" rx="3"/>
+      </g>
+    </symbol>
+    <symbol id="agave" viewBox="0 0 60 60">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M30 56 L30 28"/>
+        <path d="M30 32 L10 14"/><path d="M30 32 L50 14"/>
+        <path d="M30 30 L4 28"/><path d="M30 30 L56 28"/>
+        <path d="M30 34 L14 50"/><path d="M30 34 L46 50"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Cursor glow -->
+<div class="glow" id="glow"></div>
+
+<!-- Top scrolling ticker -->
+<div class="tickerbar">
+  <div class="ticker-track">
+    <span><span>LIFE IS TRIP · NOT A DESTINATION</span><span class="dot"></span><span>OPEN 18:00 — 24:00</span><span class="dot"></span><span>京町堀 · OSAKA</span><span class="dot"></span><span>HECHO A MANO</span><span class="dot"></span><span>頭からトリップ</span><span class="dot"></span></span>
+    <span><span>LIFE IS TRIP · NOT A DESTINATION</span><span class="dot"></span><span>OPEN 18:00 — 24:00</span><span class="dot"></span><span>京町堀 · OSAKA</span><span class="dot"></span><span>HECHO A MANO</span><span class="dot"></span><span>頭からトリップ</span><span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a class="nav-brand" href="#top">
+    <img src="assets/trip-logo.png" alt="TRIP" />
+    <span>TRIP</span>
+  </a>
+  <div class="nav-links">
+    <a href="#menu">MENU</a>
+    <a href="#about">ABOUT</a>
+    <a href="#visit">VISIT</a>
+    <a href="#vibe">VIBE</a>
+  </div>
+  <button class="nav-cta js-reserve-open" type="button" data-reserve-open>予約 / RESERVE</button>
+</nav>
+
+<!-- Reserve modal -->
+<div id="reserveModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-box">
+    <button class="modal-close js-reserve-close" type="button" data-reserve-close aria-label="閉じる">×</button>
+    <div class="modal-kicker">RESERVA</div>
+    <div class="modal-title">ご予約</div>
+    <div class="modal-sub">come trip with us.</div>
+    <div class="modal-actions">
+      <a class="modal-btn modal-btn-insta" href="https://www.instagram.com/trip_tacos/" target="_blank" rel="noopener">
+        <span class="mb-lbl">INSTAGRAM DM</span>
+        <span class="mb-sub">@trip_tacos</span>
+      </a>
+      <a class="modal-btn modal-btn-tel" href="tel:06XXXX1312">
+        <span class="mb-lbl">電話で予約</span>
+        <span class="mb-sub">06-XXXX-1312</span>
+      </a>
+    </div>
+    <div class="modal-note">営業 18:00 — 24:00 ／ 不定休</div>
+  </div>
+</div>
+<style>
+.modal-overlay{
+  position: fixed; inset: 0; z-index: 200;
+  background: radial-gradient(circle at 50% 50%, rgba(216,30,26,.55), rgba(26,8,5,.85));
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: modalFade .25s ease;
+}
+.modal-overlay.open{ display:flex; }
+@keyframes modalFade{ from{opacity:0;} to{opacity:1;} }
+.modal-box{
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 28px;
+  box-shadow: 12px 12px 0 var(--ink);
+  padding: 40px 32px 32px;
+  max-width: 420px; width: 100%;
+  position: relative;
+  text-align: center;
+  transform: rotate(-1deg);
+  animation: modalPop .35s cubic-bezier(.5,1.6,.4,1);
+}
+@keyframes modalPop{ from{transform:rotate(-1deg) scale(.7); opacity:0;} to{transform:rotate(-1deg) scale(1); opacity:1;} }
+.modal-close{
+  position:absolute; top:12px; right:14px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ink); color: var(--paper);
+  font-family:"Bagel Fat One", sans-serif; font-size: 20px;
+  border: none; cursor: pointer;
+  line-height: 1;
+}
+.modal-close:hover{ background: var(--red); }
+.modal-kicker{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 12px; letter-spacing:.3em;
+  color: var(--red); margin-bottom: 6px;
+}
+.modal-title{
+  font-family:"Bagel Fat One", sans-serif;
+  font-size: 38px; color: var(--red);
+  text-shadow: 3px 3px 0 var(--ink);
+  letter-spacing: .04em;
+}
+.modal-sub{
+  font-family:"Shrikhand", serif;
+  font-size: 18px; color: var(--ink);
+  margin: 10px 0 24px; opacity:.8;
+}
+.modal-actions{ display:flex; flex-direction:column; gap: 14px; }
+.modal-btn{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding: 18px 16px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family:"Bagel Fat One", sans-serif;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.modal-btn:hover{ transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink);}
+.modal-btn-insta{ background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: #fff; }
+.modal-btn-tel{ background: var(--red); color: var(--paper); }
+.mb-lbl{ font-size: 16px; letter-spacing:.14em; }
+.mb-sub{ font-size: 12px; letter-spacing:.06em; opacity:.92; font-family:"Shippori Mincho", serif; font-weight:700; }
+.modal-note{
+  margin-top: 22px;
+  font-family:"Shippori Mincho", serif;
+  font-weight: 700;
+  font-size: 12px; color: var(--ink); opacity:.7;
+}
+</style>
+<script>
+(function(){
+  const modal = document.getElementById('reserveModal');
+  function open(){
+    if(!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    if(!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+  window.openReserveModal = open;
+  window.closeReserveModal = close;
+  // Wire up via data attribute / class fallback
+  document.addEventListener('click', function(e){
+    const opener = e.target.closest('[data-reserve-open], .js-reserve-open');
+    if(opener){ e.preventDefault(); open(); return; }
+    const closer = e.target.closest('[data-reserve-close], .js-reserve-close');
+    if(closer){ e.preventDefault(); close(); return; }
+    if(modal && modal.classList.contains('open') && e.target === modal){ close(); }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="sunburst"></div>
+  <div class="rings"></div>
+  <div class="mandala">
+    <div class="mandala-ring" id="mandala-outer"></div>
+    <div class="mandala-ring inner" id="mandala-inner"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="kicker">
+      <svg width="14" height="14" style="color:var(--paper)"><use href="#aztec-star"/></svg>
+      <span>OSAKA · 京町堀 · TACOS &amp; MEZCAL</span>
+      <svg width="14" height="14" style="color:var(--paper)"><use href="#aztec-star"/></svg>
+    </div>
+    <h1>
+      <span class="wave-letter" data-l="T">T</span><span class="wave-letter" data-l="R">R</span><span class="wave-letter" data-l="I">I</span><span class="wave-letter" data-l="P">P</span>
+    </h1>
+    <div class="hero-sub">— Tacos &amp; otros viajes nocturnos —</div>
+    <div class="hero-jp">タ コ ス で 頭 が ト リ ッ プ す る 、 メ キ シ カ ン 酒 場</div>
+    <div class="motto">"Life is <em>trip</em>, not a destination."</div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#menu">VIEW MENU</a>
+      <a class="btn" href="#visit">VISIT</a>
+    </div>
+  </div>
+</section>
+
+<!-- diagonal -->
+<div class="diagonal">
+  <div class="ticker-track">
+    <span><span>VIVA TACOS</span><span class="star">✺</span><span>MEZCAL Y MAS</span><span class="star">✺</span><span>NO RULES · ONLY SALSA</span><span class="star">✺</span><span>頭からトリップ</span><span class="star">✺</span></span>
+    <span><span>VIVA TACOS</span><span class="star">✺</span><span>MEZCAL Y MAS</span><span class="star">✺</span><span>NO RULES · ONLY SALSA</span><span class="star">✺</span><span>頭からトリップ</span><span class="star">✺</span></span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="section menu-section" id="menu">
+  <h2 class="section-title">MENU</h2>
+  <div class="section-sub">— Ocho tacos, salsa infinita —</div>
+  <div class="section-rule" style="background-image: radial-gradient(circle, var(--paper) 2px, transparent 2.4px);"></div>
+
+  <div class="menu-grid">
+    <article class="menu-card">
+      <span class="menu-tag">SIGNATURE</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-ate.png" alt="ATE 盛り合わせ" /><svg class="glyph"><use href="#sun-ray"/></svg></div>
+      <div class="menu-name">ATE 盛り合わせ <span class="price">¥1,580</span></div>
+      <div class="menu-jp">ア・テ もりあわせ</div>
+      <p class="menu-desc">最初の一皿。今日のおすすめを少しずつ、皿の上で世界一周。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">本日の前菜七種盛り</span>
+          <span class="menu-item-desc">レバーパテ、半熟卵、自家製ピクルス、菜の花、チーズなど、その日の良いものを少量多皿で。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>FLAVOR</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot off"></i></div>
+    </article>
+
+    <article class="menu-card">
+      <span class="menu-tag">TACOS</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-tacos.png" alt="タコス" /><svg class="glyph"><use href="#aztec-star"/></svg></div>
+      <div class="menu-name">TACOS <span class="price">¥520 ~</span></div>
+      <div class="menu-jp">炭火タコス</div>
+      <p class="menu-desc">自家製トルティーヤに、炭火の肉、香菜、ライム。これが旅の始まり。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">カルニタス</span>
+          <span class="menu-item-desc">豚をラードで長時間煮込み、ほろっとほどける食感に。サルサ・ベルデと玉ねぎで爽やかに。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">チキンウイング</span>
+          <span class="menu-item-desc">炭火で香ばしく焼き上げた手羽のタコス。ピリ辛のサルサ・ロハで、骨までしゃぶりたくなる一皿。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>SPICE</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot off"></i></div>
+    </article>
+
+    <article class="menu-card">
+      <span class="menu-tag">FOOD 3</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-food3.png" alt="FOOD 三種" /><svg class="glyph"><use href="#sun-ray"/></svg></div>
+      <div class="menu-name">FOOD 三種 <span class="price">¥1,180 ~</span></div>
+      <div class="menu-jp">食事三種</div>
+      <p class="menu-desc">〆にも、ど真ん中にも。米・麺・パスタの食事系トリップ。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">タコスライス</span>
+          <span class="menu-item-desc">スパイスで炒めた挽肉、トマト、半熟目玉焼き。ご飯と一緒にぐちゃっと混ぜて、一気に頬張る背徳の一皿。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">スパイス出汁焼そば</span>
+          <span class="menu-item-desc">和の出汁にメキシカンスパイスを忍ばせた、当店だけの焼そば。最後にライムを絞ってトリップ。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">日替わりパスタ</span>
+          <span class="menu-item-desc">その日の食材で気まぐれに。和の器に盛る、ジャンルレスな一皿。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>VOL.</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot"></i></div>
+    </article>
+
+    <article class="menu-card">
+      <span class="menu-tag">CHIPS</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-nachos.png" alt="チップス・ナチョス" /><svg class="glyph"><use href="#aztec-star"/></svg></div>
+      <div class="menu-name">CHIPS &amp; NACHOS <span class="price">¥780 ~</span></div>
+      <div class="menu-jp">チップスとサルサ／ナチョス</div>
+      <p class="menu-desc">手が止まらないやつ。ビールが進むやつ。話が止まらないやつ。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">チップスとサルサ三種</span>
+          <span class="menu-item-desc">自家製トルティーヤチップスに、ピコ・デ・ガヨ、ワカモレ、サワークリーム。三種を行ったり来たり。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">ナチョス</span>
+          <span class="menu-item-desc">炭火の肉、チーズ、サルサをチップスに山盛りに。一人で食べきれたら、あなたは旅人だ。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>SHARE</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot off"></i></div>
+    </article>
+
+    <article class="menu-card">
+      <span class="menu-tag">MEXICANO</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-mex.png" alt="メキシカン ATE" /><svg class="glyph"><use href="#sun-ray"/></svg></div>
+      <div class="menu-name">MEXICAN ATE <span class="price">¥980 ~</span></div>
+      <div class="menu-jp">メキシカン アテメニュー</div>
+      <p class="menu-desc">海の幸を、メキシコの風で。お酒に寄り添う三皿。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">イイダコのメキシコ風</span>
+          <span class="menu-item-desc">ぷりっとしたイイダコをトマトとブロッコリーと共に。チーズとオリーブオイルで仕上げる、赤い皿の一品。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">エビのテキーラ炒め</span>
+          <span class="menu-item-desc">プリプリのエビを、テキーラとハラペーニョで一気に炒める。香りが立った瞬間に旅は始まる。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">ブリとタコのセビーチェ</span>
+          <span class="menu-item-desc">ライムでマリネしたブリとタコ、紫玉ねぎ、香菜。爽やかな酸味が、口の中をリセットする。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>FRESH</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot off"></i></div>
+    </article>
+
+    <article class="menu-card">
+      <span class="menu-tag">ITALIANO</span>
+      <div class="menu-img"><img class="menu-photo" src="assets/menu-ita.png" alt="イタリアン ATE" /><svg class="glyph"><use href="#aztec-star"/></svg></div>
+      <div class="menu-name">ITALIAN ATE <span class="price">¥980 ~</span></div>
+      <div class="menu-jp">イタリアン アテメニュー</div>
+      <p class="menu-desc">メキシコだけじゃ収まらない。地中海の風も、ここで吹かせる。</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <span class="menu-item-name">春菊とリンゴのサラダ</span>
+          <span class="menu-item-desc">ほろ苦い春菊と、シャキッと甘いリンゴ。パルミジャーノを削って、レモンとオリーブオイルで。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">ホタルイカと旬野菜</span>
+          <span class="menu-item-desc">バルサミコの黒いソースで絡める、ホタルイカと旬野菜の一皿。春の海の、ほろ苦い甘み。</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">牡蠣のアラビアータ</span>
+          <span class="menu-item-desc">プリッとした牡蠣を、唐辛子の効いたトマトソースで。バゲットでソースを最後まで。</span>
+        </div>
+      </div>
+      <div class="menu-spice"><span>WINE</span><i class="spice-dot"></i><i class="spice-dot"></i><i class="spice-dot off"></i></div>
+    </article>
+  </div>
+  </div>
+</section>
+
+<!-- diagonal 2 -->
+<div class="diagonal" style="transform: rotate(1.5deg);">
+  <div class="ticker-track">
+    <span><span>EAT TACOS</span><span class="star">✺</span><span>DRINK MEZCAL</span><span class="star">✺</span><span>FEEL THE TRIP</span><span class="star">✺</span><span>SIN PRISA</span><span class="star">✺</span></span>
+    <span><span>EAT TACOS</span><span class="star">✺</span><span>DRINK MEZCAL</span><span class="star">✺</span><span>FEEL THE TRIP</span><span class="star">✺</span><span>SIN PRISA</span><span class="star">✺</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <h2 class="section-title">ABOUT</h2>
+  <div class="section-sub">— Sobre nosotros —</div>
+  <div class="section-rule"></div>
+
+  <div class="about-wrap">
+    <div class="about-text">
+      <h3>Life is trip,<br/>not a destination.</h3>
+      <p>人生はぶっ飛んだ旅だし、誰かに「お前、ぶっ飛んでるぞ」なんて言われたりするもんで。</p>
+      <p>それでも、ずっとずっと通過点で。手を伸ばしても、伸ばしても、まだ届かない。</p>
+      <p>そんな旅の途中に、ちょっとだけ立ち寄ってくれ。タコスとメスカルと、香菜のひとつまみで、もう一回ぶっ飛び直そう。</p>
+      <div class="about-quote">
+        come,<br/>trip with us.
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="ring3"></div>
+      <div class="ring"></div>
+      <div class="ring2"></div>
+      <img src="assets/trip-logo.png" alt="TRIP logo" />
+    </div>
+  </div>
+</section>
+
+<!-- BIG MOTTO STRIP removed -->
+
+<!-- VISIT / 店舗情報 -->
+<section class="section visit" id="visit">
+  <h2 class="section-title">VISIT</h2>
+  <div class="section-sub">— 店舗情報 / Información —</div>
+  <div class="section-rule" style="background-image: radial-gradient(circle, var(--paper) 2px, transparent 2.4px);"></div>
+
+  <div class="info-stack">
+
+    <!-- 01 営業時間 -->
+    <div class="info-card span-4">
+      <div class="cat-head">
+        <span class="num">01</span>
+        <span class="ttl">HORARIO<small>営業時間</small></span>
+      </div>
+      <div class="kv"><span class="k">OPEN</span><span class="v big">18:00 — 24:00</span></div>
+      <div class="kv"><span class="k">定休日</span><span class="v">不定休</span></div>
+      <div class="note">※ 店休日は Instagram にてお知らせいたします。</div>
+    </div>
+
+    <!-- 02 アクセス -->
+    <div class="info-card span-8">
+      <div class="cat-head">
+        <span class="num">02</span>
+        <span class="ttl">DIRECCIÓN &amp; ACCESO<small>所在地 &amp; アクセス</small></span>
+      </div>
+      <div class="address-block">
+        <strong>TRIP</strong>
+        〒550-0003 大阪府大阪市西区京町堀 2-3-4 サンヤマトビル 202<br/>
+        <span style="font-family:'Bagel Fat One',sans-serif; font-size:13px; color:var(--red); letter-spacing:.08em;">肥後橋駅から 662m</span>
+      </div>
+      <ul class="access-list">
+        <li><span class="badge">四ツ橋線</span><span>肥後橋駅 7番出口 ／ 徒歩 10 分</span></li>
+        <li><span class="badge">四ツ橋線</span><span>四ツ橋駅 28番出口 ／ 徒歩 10 分</span></li>
+        <li><span class="badge">千日前線 / 中央線</span><span>阿波座駅 1番出口 ／ 徒歩 10 分</span></li>
+        <li><span class="badge" style="background:var(--ink);">大阪シティバス</span><span>京町堀一丁目 ／ 徒歩 1 分</span></li>
+      </ul>
+      <div class="map-pic" aria-label="map placeholder" style="margin-top:18px;">
+        <span class="pin">TRIP · 京町堀</span>
+      </div>
+    </div>
+
+    <!-- 03 席 -->
+    <div class="info-card span-6">
+      <div class="cat-head">
+        <span class="num">03</span>
+        <span class="ttl">ASIENTOS<small>席数 / 18 SEATS</small></span>
+      </div>
+      <div class="kv"><span class="k">TOTAL</span><span class="v big">18 席</span></div>
+      <div class="kv"><span class="k">カウンター</span><span class="v">2 席</span></div>
+      <div class="kv"><span class="k">テーブル 4名</span><span class="v">× 2 卓</span></div>
+      <div class="kv"><span class="k">テーブル 2名</span><span class="v">× 2 卓</span></div>
+    </div>
+
+    <!-- 04 喫煙 + 予約 -->
+    <div class="info-card span-6">
+      <div class="cat-head">
+        <span class="num">04</span>
+        <span class="ttl">FUMAR &amp; RESERVA<small>喫煙 / ご予約</small></span>
+      </div>
+      <div class="kv"><span class="k">喫煙</span><span class="v big" style="color:var(--red);">全席喫煙可</span></div>
+      <div class="kv"><span class="k">TEL</span><span class="v">06-XXXX-1312</span></div>
+      <div class="kv"><span class="k">DM</span><span class="v"><a href="https://www.instagram.com/trip_tacos/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline wavy var(--red);">@trip_tacos</a></span></div>
+      <div class="note" style="font-family:'Shrikhand',serif; font-size:18px; color:var(--red); border-top:none; padding-top:18px;">
+        come trip with us.
+      </div>
+    </div>
+
+    <!-- 05 支払い -->
+    <div class="info-card full">
+      <div class="cat-head">
+        <span class="num">05</span>
+        <span class="ttl">PAGO<small>お支払い方法</small></span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+        <div class="pay-block" style="margin:0;">
+          <div class="pay-lbl">CARD ／ クレジットカード</div>
+          <div class="chip-row">
+            <span class="chip">VISA</span>
+            <span class="chip">Master</span>
+            <span class="chip">JCB</span>
+          </div>
+        </div>
+        <div class="pay-block" style="margin:0; padding:0; border:none;">
+          <div class="pay-lbl">E-MONEY ／ 電子マネー</div>
+          <div class="chip-row">
+            <span class="chip">交通系 (Suica 等)</span>
+            <span class="chip">iD</span>
+            <span class="chip">QUICPay</span>
+          </div>
+        </div>
+        <div class="pay-block" style="margin:0; padding:0; border:none;">
+          <div class="pay-lbl">QR ／ QR コード決済</div>
+          <div class="chip-row">
+            <span class="chip">PayPay</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VIBE -->
+<section class="section vibe" id="vibe">
+  <h2 class="section-title">VIBE</h2>
+  <div class="section-sub">— Voces de la noche —</div>
+  <div class="section-rule"></div>
+
+  <div class="review-grid">
+
+    <article class="review">
+      <div class="review-photos">
+        <img src="assets/vibe-1a.png" alt="ATE 盛り合わせ" />
+        <img src="assets/vibe-1b.png" alt="タコス三種" />
+      </div>
+      <div class="review-body">
+        <div class="stars">★★★★★</div>
+        <div class="who">VOZ 01 · 食べ歩きレビュアー</div>
+        <p class="summary">以前は間借りで営業されていたお店の実店舗化に伴ってご訪問。内装は雑貨やレコードで埋め尽くされたアジトのような空間で、壁の色使いがキャッチーで良かった。</p>
+        <div class="review-detail"><div class="review-detail-inner">
+          料理は ATE 盛り合わせ・カルニタス・チョリソーポテト・エビとワカモレをいただきました。ATE 盛り合わせは盛り付けが間借り時代と段違いで良くなっていて驚き。<br/><br/>
+          タコスの種類は以前と変わらずですが、鉄板を導入されており、皮の香ばしさがよく引き出されています。トラディショナルかつ日本人向けの味付けで、ここ最近で食べたタコスで一番美味しかった。<br/><br/>
+          バイクだったのでお酒は飲めませんでしたが、自家製のレモンスカッシュは甘めでレモンの果実入り、つぶつぶの食感がクセになる味。ハイビスカスティーもあり。テキーラ・メスカルも豊富で、価格設定もバーよりお手頃。次回は電車で。<br/><br/>
+          相変わらず店員さん 2 人の接客が気持ち良く、ハマる人にはハマるいいお店でした。
+        </div></div>
+        <button class="review-toggle" type="button">詳細を見る</button>
+      </div>
+    </article>
+
+    <article class="review">
+      <div class="review-photos">
+        <img src="assets/vibe-2a.png" alt="ATE 盛り合わせ" />
+        <img src="assets/vibe-2b.png" alt="ポテトサラダ" />
+      </div>
+      <div class="review-body">
+        <div class="stars">★★★★★</div>
+        <div class="who">VOZ 02 · 通いすぎている常連</div>
+        <p class="summary">靭公園近くにできた新店。間借り時代から通っていますが、鉄板で生地から焼き上げているので料理のクオリティが格段に上がっています。</p>
+        <div class="review-detail"><div class="review-detail-inner">
+          ドリンクメニュー、フードメニューもかなり豊富で、全て食べ切るにはかなり通わないと難しいレベル。<br/><br/>
+          おすすめは <strong style="color:var(--red);">自家製レモンサワー、ATE 盛り合わせ、カルニタスライス</strong>。レモンサワーのレモンはジャムのようでお土産に欲しいレベルの美味しさ、ATE 盛り合わせは全て自作で種類も豊富、カルニタスライスは脳内麻薬が溢れ出します。<br/><br/>
+          営業時間は 18:00–24:00。かなり繁盛しているのでご予約をおすすめ。落ち着き次第ランチ営業もされる予定とのこと。<br/><br/>
+          オープンしてから頻繁に通っていますが、あまりの美味しさに気づけば破産寸前。単価は低いのですが、美味しすぎてありえない量を食べてしまいます。店員さんの温かさと料理の中毒性で、貯金が底を尽きそうです。
+        </div></div>
+        <button class="review-toggle" type="button">詳細を見る</button>
+      </div>
+    </article>
+
+    <article class="review">
+      <div class="review-photos">
+        <img src="assets/vibe-3a.png" alt="ポテトとマスタード" />
+        <img src="assets/vibe-3b.png" alt="メスカル & テキーラ" />
+      </div>
+      <div class="review-body">
+        <div class="stars">★★★★★</div>
+        <div class="who">VOZ 03 · お酒好きグルメ</div>
+        <p class="summary">最近開店したタコス料理屋さんへ。店内はポップでお洒落な雰囲気。タコスは定番のカルニタス、チキンティンガから、オリジナルタコスまで様々な種類が楽しめます。</p>
+        <div class="review-detail"><div class="review-detail-inner">
+          アテも豊富に用意されており、煮卵のタルタル、鰤とタコのセビーチェなどメキシコ料理と相性抜群。<br/><br/>
+          テキーラやメスカルはソーダ割りでいただきましたが、飲みやすく料理と相性が良かったです！<br/><br/>
+          タコスやエスニックなアテを楽しみながら飲みたい人におすすめのお店です。
+        </div></div>
+        <button class="review-toggle" type="button">詳細を見る</button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.review-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.review');
+      const open = card.classList.toggle('open');
+      btn.textContent = open ? '閉じる' : '詳細を見る';
+    });
+  });
+</script>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <h2>COME · TRIP<br/>WITH US</h2>
+  <button type="button" class="btn btn-primary cta-reserve-btn js-reserve-open" data-reserve-open>予約する / RESERVE</button>
+</section>
+
+<!-- Footer -->
+<footer>
+  <img class="foot-logo" src="assets/trip-logo.png" alt="TRIP"/>
+  <div class="foot-name">TRIP</div>
+  <div class="foot-tag">Life is trip, not a destination.</div>
+  <div class="socials">
+    <a href="https://www.instagram.com/trip_tacos/" target="_blank" rel="noopener">INSTAGRAM</a>
+    <a href="#visit">MAP</a>
+    <a href="#">TEL</a>
+  </div>
+  <div class="copy">© TRIP · 大阪 京町堀 · Hecho con humo y picante</div>
+</footer>
+
+<!-- Cursor + scroll psychedelic interactions -->
+<script>
+(function(){
+  const glow = document.getElementById('glow');
+  let tx=window.innerWidth/2, ty=window.innerHeight/2, gx=tx, gy=ty;
+  window.addEventListener('pointermove', e=>{ tx = e.clientX; ty = e.clientY; });
+  function loop(){
+    gx += (tx-gx)*.12; gy += (ty-gy)*.12;
+    glow.style.left = gx+'px'; glow.style.top = gy+'px';
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // hue shift on scroll
+  function onScroll(){
+    const max = document.body.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, window.scrollY / max));
+    const hue = (p * 40) - 5; // -5deg .. 35deg
+    document.documentElement.style.setProperty('--hue', hue + 'deg');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // mandala — distribute logos around two rings
+  function buildMandala(id, count, radiusPercent){
+    const el = document.getElementById(id);
+    if(!el) return;
+    for(let i=0;i<count;i++){
+      const a = (i/count) * 2 * Math.PI;
+      const x = 50 + Math.cos(a) * radiusPercent;
+      const y = 50 + Math.sin(a) * radiusPercent;
+      const img = document.createElement('img');
+      img.src = 'assets/trip-logo.png';
+      img.alt = '';
+      img.style.left = x + '%';
+      img.style.top = y + '%';
+      img.style.transform = 'translate(-50%,-50%) rotate(' + (i*36) + 'deg)';
+      el.appendChild(img);
+    }
+  }
+  buildMandala('mandala-outer', 12, 45);
+  buildMandala('mandala-inner', 8, 45);
+})();
+</script>
+
+<!-- Tweaks -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<div id="tweaks-root"></div>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "red": "#E81B16",
+  "redDeep": "#7E1A0E",
+  "yellow": "#F2D016",
+  "magenta": "#C8125E",
+  "spinSpeed": 50,
+  "trippyChroma": 70,
+  "showMandala": true,
+  "showGlow": true,
+  "tilt": true
+}/*EDITMODE-END*/;
+
+function App(){
+  const [t, setT] = window.useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(()=>{
+    const r = document.documentElement;
+    r.style.setProperty('--red', t.red);
+    r.style.setProperty('--red-deep', t.redDeep);
+    r.style.setProperty('--yellow', t.yellow);
+    r.style.setProperty('--paper', t.yellow);
+    r.style.setProperty('--magenta', t.magenta);
+
+    document.querySelectorAll('.menu-card, .review').forEach(el=>{
+      el.style.transform = t.tilt ? '' : 'rotate(0deg)';
+    });
+    document.querySelectorAll('.sunburst').forEach(el=>{
+      el.style.animationDuration = (120 - t.spinSpeed) + 's';
+    });
+    document.querySelectorAll('.mandala').forEach(el=>{
+      el.style.display = t.showMandala ? '' : 'none';
+    });
+    const g = document.getElementById('glow');
+    if(g) g.style.display = t.showGlow ? '' : 'none';
+    // chroma intensity on hero letters
+    document.querySelectorAll('.hero h1 .wave-letter').forEach(el=>{
+      el.style.setProperty('--chroma', (t.trippyChroma/100));
+    });
+    const css = `.hero h1 .wave-letter::before{ opacity: ${t.trippyChroma/140}; } .hero h1 .wave-letter::after{ opacity: ${t.trippyChroma/140}; }`;
+    let s = document.getElementById('chroma-style');
+    if(!s){ s = document.createElement('style'); s.id='chroma-style'; document.head.appendChild(s); }
+    s.textContent = css;
+  }, [t]);
+
+  const { TweaksPanel, TweakSection, TweakColor, TweakSlider, TweakToggle } = window;
+  return (
+    <TweaksPanel title="TRIP TWEAKS">
+      <TweakSection title="PALETTE">
+        <TweakColor label="赤 / RED" value={t.red} onChange={v=>setT('red', v)} />
+        <TweakColor label="深紅 / DEEP" value={t.redDeep} onChange={v=>setT('redDeep', v)} />
+        <TweakColor label="黄 / YELLOW" value={t.yellow} onChange={v=>setT('yellow', v)} />
+        <TweakColor label="残光 / MAGENTA" value={t.magenta} onChange={v=>setT('magenta', v)} />
+      </TweakSection>
+      <TweakSection title="TRIP">
+        <TweakSlider label="サンバースト回転" min={0} max={100} step={5} value={t.spinSpeed} onChange={v=>setT('spinSpeed', v)} />
+        <TweakSlider label="クロマズレ強度" min={0} max={140} step={5} value={t.trippyChroma} onChange={v=>setT('trippyChroma', v)} />
+        <TweakToggle label="ロゴ・マンダラ" value={t.showMandala} onChange={v=>setT('showMandala', v)} />
+        <TweakToggle label="カーソル残光" value={t.showGlow} onChange={v=>setT('showGlow', v)} />
+        <TweakToggle label="カードを傾ける" value={t.tilt} onChange={v=>setT('tilt', v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById('tweaks-root'));
+root.render(<App />);
+</script>
+
+</body>
+</html>
