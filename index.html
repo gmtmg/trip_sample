@@ -1446,8 +1446,93 @@ footer .copy{
   .about-wrap, .info-stack{ grid-template-columns: 1fr; gap: 32px;}
   .info-stack .full{ grid-column: auto; }
   .nav-links{ display:none; }
+  .nav-cta{ display:none; }
   .section{ padding: 80px 20px; }
+
+  /* Taco hamburger button */
+  .taco-burger{
+    display:flex; align-items:center; justify-content:center;
+    width:44px; height:44px;
+    background:none; border:none; cursor:pointer;
+    font-size:28px;
+    border-radius:50%;
+    transition: transform .2s;
+  }
+  .taco-burger:active{ transform:scale(0.85) rotate(-10deg); }
+
+  /* Mobile menu dropdown */
+  .mobile-menu{
+    position:absolute;
+    top:100%; right:16px;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 12px 8px;
+    box-shadow: 6px 6px 0 var(--ink);
+    display:flex; flex-direction:column; gap:4px;
+    z-index:50;
+    pointer-events:none;
+    opacity:0;
+  }
+  .mobile-menu.open{
+    pointer-events:auto;
+    opacity:1;
+  }
+  .mobile-menu a,
+  .mobile-menu button{
+    display:block;
+    font-family:"Bagel Fat One", sans-serif;
+    font-size:16px; letter-spacing:.08em;
+    color: var(--ink);
+    padding: 12px 24px;
+    border-radius: 14px;
+    text-align:center;
+    text-decoration:none;
+    border:none; background:none; cursor:pointer;
+    transform: translateY(-10px) scale(0.8);
+    opacity:0;
+    transition: background .15s, color .15s;
+  }
+  .mobile-menu a:hover,
+  .mobile-menu button:hover{
+    background: var(--red);
+    color: var(--paper);
+  }
+  .mobile-menu.open a,
+  .mobile-menu.open button{
+    animation: menuPop .35s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .mobile-menu.open a:nth-child(1){ animation-delay: .0s; }
+  .mobile-menu.open a:nth-child(2){ animation-delay: .06s; }
+  .mobile-menu.open a:nth-child(3){ animation-delay: .12s; }
+  .mobile-menu.open a:nth-child(4){ animation-delay: .18s; }
+  .mobile-menu.open button{ animation-delay: .24s; }
+
+  /* Close animation */
+  .mobile-menu.closing a,
+  .mobile-menu.closing button{
+    animation: menuBye .25s cubic-bezier(.6,-.28,.74,.05) forwards;
+  }
+  .mobile-menu.closing a:nth-child(4),
+  .mobile-menu.closing button{ animation-delay: .0s; }
+  .mobile-menu.closing a:nth-child(3){ animation-delay: .05s; }
+  .mobile-menu.closing a:nth-child(2){ animation-delay: .10s; }
+  .mobile-menu.closing a:nth-child(1){ animation-delay: .15s; }
+
+  @keyframes menuPop{
+    0%   { transform: translateY(-10px) scale(0.8) rotate(-4deg); opacity:0; }
+    60%  { transform: translateY(4px) scale(1.05) rotate(2deg); opacity:1; }
+    80%  { transform: translateY(-2px) scale(0.98) rotate(-1deg); opacity:1; }
+    100% { transform: translateY(0) scale(1) rotate(0); opacity:1; }
+  }
+  @keyframes menuBye{
+    0%   { transform: translateY(0) scale(1); opacity:1; }
+    100% { transform: translateY(-12px) scale(0.7) rotate(6deg); opacity:0; }
+  }
 }
+/* Hide taco burger on desktop */
+.taco-burger{ display:none; }
+.mobile-menu{ display:none; }
 
 /* ========== Mobile hero TRIP glitch ========== */
 @media (max-width: 880px){
@@ -1587,6 +1672,14 @@ footer .copy{
     <a href="#vibe">VIBE</a>
   </div>
   <button class="nav-cta js-reserve-open" type="button" data-reserve-open>予約 / RESERVE</button>
+  <button class="taco-burger" type="button" aria-label="メニュー">🌮</button>
+  <div class="mobile-menu">
+    <a href="#menu">MENU</a>
+    <a href="#about">ABOUT</a>
+    <a href="#visit">VISIT</a>
+    <a href="#vibe">VIBE</a>
+    <button type="button" class="js-reserve-open" data-reserve-open>予約 / RESERVE</button>
+  </div>
 </nav>
 
 <!-- Reserve modal -->
@@ -2234,6 +2327,47 @@ function App(){
 }
 const root = ReactDOM.createRoot(document.getElementById('tweaks-root'));
 root.render(<App />);
+</script>
+
+<script>
+// Mobile taco menu
+(function(){
+  const burger = document.querySelector('.taco-burger');
+  const menu = document.querySelector('.mobile-menu');
+  if(!burger || !menu) return;
+
+  function openMenu(){
+    menu.classList.remove('closing');
+    menu.classList.add('open');
+  }
+  function closeMenu(){
+    if(!menu.classList.contains('open')) return;
+    menu.classList.add('closing');
+    menu.classList.remove('open');
+    setTimeout(function(){ menu.classList.remove('closing'); }, 300);
+  }
+
+  burger.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(menu.classList.contains('open')){
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!menu.contains(e.target) && e.target !== burger){
+      closeMenu();
+    }
+  });
+
+  // Close on link click
+  menu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){ closeMenu(); });
+  });
+})();
 </script>
 
 <script>
