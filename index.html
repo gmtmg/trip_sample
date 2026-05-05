@@ -2478,8 +2478,10 @@ root.render(<App />);
   const allClasses = [...fonts, ...stretches];
 
   function clearAll(){
-    letters.forEach(l => l.classList.remove(...allClasses));
-    if(accentWrap) accentWrap.style.transform = 'scale(1)';
+    letters.forEach(l => {
+      l.classList.remove(...allClasses);
+      l.style.fontSize = '';
+    });
   }
 
   function randomFont(){ return fonts[Math.floor(Math.random()*fonts.length)]; }
@@ -2494,11 +2496,9 @@ root.render(<App />);
         l.classList.remove(...allClasses);
         l.classList.add(randomFont());
         if(Math.random() < 0.4) l.classList.add(randomStretch());
+        const sz = (0.7 + Math.random() * 0.6).toFixed(2);
+        l.style.fontSize = sz + 'em';
       });
-      if(accentWrap){
-        const sc = (0.6 + Math.random() * 1.4).toFixed(2);
-        accentWrap.style.transform = 'scale(' + sc + ')';
-      }
       i++;
       setTimeout(frame, 60 + Math.random()*80);
     }
