@@ -2474,6 +2474,13 @@ root.render(<App />);
 
 <script>
 (function(){
+  // Lock h1 height so glitch font-size changes don't shift layout
+  const h1 = document.querySelector('.hero-title');
+  if(h1){
+    h1.style.height = h1.offsetHeight + 'px';
+    window.addEventListener('resize', function(){ h1.style.height = ''; requestAnimationFrame(function(){ h1.style.height = h1.offsetHeight + 'px'; }); });
+  }
+
   const letters = document.querySelectorAll('.hero-title .wave-letter');
   const accentWrap = document.querySelector('.r-accent-wrap');
   if(!letters.length) return;
