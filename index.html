@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Bungee&family=Bungee+Shade&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Rampart+One&family=Reenie+Beanie&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Bungee&family=Bungee+Shade&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Rampart+One&family=Reenie+Beanie&family=Press+Start+2P&display=swap" rel="stylesheet" />
 
 <style>
 :root{
@@ -152,6 +152,25 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
   50%{ transform: scale(1.15); opacity:.55; }
 }
 
+/* cyan accent ring */
+.cyan-ring{
+  position:absolute;
+  top:50%; left:50%;
+  width: 60vmin; height: 60vmin;
+  margin-top: -30vmin; margin-left: -30vmin;
+  border-radius:50%;
+  border: 2px solid cyan;
+  box-shadow: 0 0 20px rgba(0,255,255,.3), inset 0 0 20px rgba(0,255,255,.1);
+  z-index:0;
+  pointer-events:none;
+  animation: cyan-pulse 5s ease-in-out infinite;
+  opacity:.6;
+}
+@keyframes cyan-pulse{
+  0%,100%{ transform: scale(1) rotate(0deg); opacity:.6; }
+  50%{ transform: scale(1.08) rotate(180deg); opacity:.35; }
+}
+
 /* radiating sunburst */
 .sunburst{
   position:absolute;
@@ -272,6 +291,7 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
 .hero-title .wave-letter.font-mono{ font-family:"Space Mono", monospace !important; }
 .hero-title .wave-letter.font-gothic{ font-family:"Zen Kaku Gothic New", sans-serif !important; }
 .hero-title .wave-letter.font-rampart{ font-family:"Rampart One", sans-serif !important; }
+.hero-title .wave-letter.font-dot{ font-family:"Press Start 2P", monospace !important; color: cyan !important; text-shadow: 0 0 12px cyan, 4px 4px 0 var(--ink) !important; font-size: 0.7em !important; }
 
 /* Stretch glitch */
 .hero-title .wave-letter.stretch-tr{
@@ -1850,6 +1870,7 @@ footer .copy{
 <section class="hero" id="top">
   <div class="sunburst"></div>
   <div class="rings"></div>
+  <div class="cyan-ring"></div>
   <div class="mandala">
     <div class="mandala-ring" id="mandala-outer"></div>
     <div class="mandala-ring inner" id="mandala-inner"></div>
@@ -2411,7 +2432,7 @@ root.render(<App />);
   const letters = document.querySelectorAll('.hero-title .wave-letter');
   if(!letters.length) return;
 
-  const fonts = ['font-bungee','font-bungee-shade','font-mono','font-gothic','font-rampart'];
+  const fonts = ['font-bungee','font-bungee-shade','font-mono','font-gothic','font-rampart','font-dot','font-dot'];
   const stretches = ['stretch-tr','stretch-bl'];
   const allClasses = [...fonts, ...stretches];
 
