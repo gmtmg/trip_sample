@@ -2311,14 +2311,14 @@ root.render(<App />);
 
   // Main loop: long silence → burst → silence → double burst → ...
   function loop(){
-    const silenceA = 3000 + Math.random()*3000; // 3-6s clean
+    const silenceA = 1200 + Math.random()*1800; // 1.2-3s clean
     setTimeout(function(){
       if(Math.random() < 0.5){
         burst();
       } else {
         doubleBurst();
       }
-      const silenceB = 3500 + Math.random()*4000; // 3.5-7.5s clean
+      const silenceB = 1500 + Math.random()*2000; // 1.5-3.5s clean
       setTimeout(loop, silenceB);
     }, silenceA);
   }
