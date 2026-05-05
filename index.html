@@ -262,24 +262,6 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
 .hero h1 .wave-letter:nth-child(2){ animation-delay: .05s; }
 .hero h1 .wave-letter:nth-child(3){ animation-delay: .10s; }
 .hero h1 .wave-letter:nth-child(4){ animation-delay: .15s; }
-/* Logo glitch image inside h1 */
-.hero-logo-glitch{
-  position:absolute;
-  top:50%; left:50%;
-  width: clamp(80px, 14vw, 200px); height: clamp(80px, 14vw, 200px);
-  border-radius:50%;
-  object-fit:cover;
-  transform: translate(-50%,-50%) scale(0);
-  opacity:0;
-  pointer-events:none;
-  z-index:10;
-  filter: brightness(1.5) contrast(1.3);
-  transition: none;
-}
-.hero-logo-glitch.flash{
-  opacity:1;
-  transform: translate(-50%,-50%) scale(1);
-}
 
 /* Font glitch classes */
 .hero-title .wave-letter.font-bungee{ font-family:"Bungee", sans-serif !important; }
@@ -1752,7 +1734,6 @@ footer .copy{
     </div>
     <h1 class="hero-title">
       <span class="wave-letter" data-l="T">T</span><span class="wave-letter" data-l="R">R</span><span class="wave-letter" data-l="I">I</span><span class="wave-letter" data-l="P">P</span>
-      <img class="hero-logo-glitch" src="assets/trip-logo.png" alt="" aria-hidden="true" />
     </h1>
     <div class="hero-sub">— Tacos &amp; otros viajes nocturnos —</div>
 
@@ -2258,7 +2239,6 @@ root.render(<App />);
 <script>
 (function(){
   const letters = document.querySelectorAll('.hero-title .wave-letter');
-  const logo = document.querySelector('.hero-logo-glitch');
   if(!letters.length) return;
 
   const fonts = ['font-bungee','font-bungee-shade','font-mono','font-gothic','font-rampart'];
@@ -2267,8 +2247,6 @@ root.render(<App />);
 
   function clearAll(){
     letters.forEach(l => l.classList.remove(...allClasses));
-    if(logo) logo.classList.remove('flash');
-    if(logo) logo.style.transform = 'translate(-50%,-50%) scale(0)';
   }
 
   function randomFont(){ return fonts[Math.floor(Math.random()*fonts.length)]; }
@@ -2279,23 +2257,11 @@ root.render(<App />);
     let i = 0;
     function frame(){
       if(i >= frames){ clearAll(); return; }
-      // Each frame: random font per letter, random stretch on 1-2 letters
       letters.forEach(l => {
         l.classList.remove(...allClasses);
         l.classList.add(randomFont());
         if(Math.random() < 0.4) l.classList.add(randomStretch());
       });
-      // Occasionally flash the logo
-      if(logo && Math.random() < 0.35){
-        logo.classList.add('flash');
-        const offsetX = (Math.random()*60 - 30).toFixed(0);
-        const offsetY = (Math.random()*40 - 20).toFixed(0);
-        const sc = (0.8 + Math.random()*0.6).toFixed(2);
-        logo.style.transform = 'translate(calc(-50% + '+offsetX+'px), calc(-50% + '+offsetY+'px)) scale('+sc+') rotate('+(Math.random()*20-10).toFixed(0)+'deg)';
-      } else if(logo){
-        logo.classList.remove('flash');
-        logo.style.transform = 'translate(-50%,-50%) scale(0)';
-      }
       i++;
       setTimeout(frame, 60 + Math.random()*80);
     }
