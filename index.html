@@ -1544,6 +1544,20 @@ footer .copy{
 
 /* ========== Mobile hero TRIP glitch ========== */
 @media (max-width: 880px){
+  .hero h1{
+    font-size: clamp(120px, 28vw, 200px);
+  }
+  .hero h1::before{
+    content:"";
+    position:absolute;
+    top:50%; left:50%;
+    width: 90%; height: 130%;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(242,208,22,.85) 0%, rgba(242,208,22,.5) 40%, transparent 70%);
+    border-radius:50%;
+    z-index:-1;
+    pointer-events:none;
+  }
   .hero h1 .wave-letter{
     animation: m-trip 9s infinite step-end;
     text-shadow: 6px 6px 0 var(--magenta), 12px 12px 0 var(--ink);
