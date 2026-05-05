@@ -63,7 +63,7 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
   padding:10px 0;
   overflow:hidden;
   border-bottom:3px solid var(--red);
-  position:fixed;
+  position:absolute;
   top:0; left:0; right:0;
   z-index:55;
 }
@@ -85,7 +85,7 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
 
 /* ========== Nav ========== */
 .nav{
-  position:fixed; top:37px; left:0; right:0; z-index:60;
+  position:absolute; top:37px; left:0; right:0; z-index:60;
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 28px;
   background: rgba(242,208,22,0.94);
@@ -2346,6 +2346,23 @@ function App(){
 }
 const root = ReactDOM.createRoot(document.getElementById('tweaks-root'));
 root.render(<App />);
+</script>
+
+<script>
+// Sticky nav+ticker (workaround for body filter breaking position:fixed)
+(function(){
+  const ticker = document.querySelector('.tickerbar');
+  const nav = document.querySelector('.nav');
+  if(!ticker || !nav) return;
+  function onScroll(){
+    const y = window.scrollY;
+    ticker.style.top = y + 'px';
+    nav.style.top = (y + ticker.offsetHeight) + 'px';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  onScroll();
+})();
 </script>
 
 <script>
