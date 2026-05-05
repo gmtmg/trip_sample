@@ -276,6 +276,16 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
      12px 12px 0 var(--ink);
   animation: trippy 8s infinite step-end;
 }
+/* Accent star inside R counter */
+.r-accent{
+  position:absolute;
+  width: 0.28em; height: 0.28em;
+  top: 0.18em; left: 0.38em;
+  pointer-events:none;
+  z-index:5;
+  animation: spin 12s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(242,208,22,.6));
+}
 .hero h1 .wave-letter::before,
 .hero h1 .wave-letter::after{
   content: attr(data-l);
@@ -1902,7 +1912,7 @@ footer .copy{
       <svg width="14" height="14" style="color:var(--paper)"><use href="#aztec-star"/></svg>
     </div>
     <h1 class="hero-title">
-      <span class="wave-letter" data-l="T">T</span><span class="wave-letter" data-l="R">R</span><span class="wave-letter" data-l="I">I</span><span class="wave-letter" data-l="P">P</span>
+      <span class="wave-letter" data-l="T">T</span><span class="wave-letter" data-l="R">R<img class="r-accent" src="assets/trip_accent.png" alt="" aria-hidden="true"/></span><span class="wave-letter" data-l="I">I</span><span class="wave-letter" data-l="P">P</span>
     </h1>
     <div class="hero-sub">— Tacos &amp; otros viajes nocturnos —</div>
 
