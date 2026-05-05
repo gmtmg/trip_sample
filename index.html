@@ -23,6 +23,9 @@
   --hue: 0deg;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
+button,a{-webkit-tap-highlight-color:transparent; outline:none;}
+button:focus,a:focus{outline:none;}
+::selection{background:var(--red); color:var(--paper);}
 html,body{background:var(--paper); color:var(--ink); overflow-x:hidden;}
 body{
   font-family:"Zen Kaku Gothic New", sans-serif;
@@ -1460,7 +1463,7 @@ footer .copy{
     box-shadow: 3px 3px 0 var(--ink);
     transition: transform .2s, box-shadow .2s;
   }
-  .taco-burger svg{ width:34px; height:34px; }
+  .taco-burger svg{ width:34px; height:34px; margin-top:-3px; }
   .taco-burger:active{ transform:scale(0.85) rotate(-10deg); box-shadow: 1px 1px 0 var(--ink); }
 
   /* Mobile menu dropdown */
