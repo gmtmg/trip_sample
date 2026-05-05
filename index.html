@@ -63,9 +63,8 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
   padding:10px 0;
   overflow:hidden;
   border-bottom:3px solid var(--red);
-  position:absolute;
-  top:0; left:0; right:0;
-  z-index:55;
+  position:relative;
+  z-index:50;
 }
 .ticker-track{
   display:flex; gap:48px; white-space:nowrap;
@@ -85,15 +84,13 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
 
 /* ========== Nav ========== */
 .nav{
-  position:absolute; top:37px; left:0; right:0; z-index:60;
+  position:relative; z-index:60;
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 28px;
   background: rgba(242,208,22,0.94);
   backdrop-filter: blur(8px);
   border-bottom: 3px solid var(--red);
 }
-/* Offset body for fixed ticker + nav */
-.hero{ padding-top: 110px; }
 .nav-brand{
   display:flex; align-items:center; gap:14px;
   font-family:"Bagel Fat One", sans-serif;
@@ -1455,13 +1452,16 @@ footer .copy{
   /* Taco hamburger button */
   .taco-burger{
     display:flex; align-items:center; justify-content:center;
-    width:44px; height:44px;
-    background:none; border:none; cursor:pointer;
-    font-size:28px;
-    border-radius:50%;
-    transition: transform .2s;
+    width:56px; height:56px;
+    background: var(--red);
+    border: 3px solid var(--ink);
+    cursor:pointer;
+    border-radius: 50%;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .2s, box-shadow .2s;
   }
-  .taco-burger:active{ transform:scale(0.85) rotate(-10deg); }
+  .taco-burger svg{ width:34px; height:34px; }
+  .taco-burger:active{ transform:scale(0.85) rotate(-10deg); box-shadow: 1px 1px 0 var(--ink); }
 
   /* Mobile menu dropdown */
   .mobile-menu{
@@ -2346,23 +2346,6 @@ function App(){
 }
 const root = ReactDOM.createRoot(document.getElementById('tweaks-root'));
 root.render(<App />);
-</script>
-
-<script>
-// Sticky nav+ticker (workaround for body filter breaking position:fixed)
-(function(){
-  const ticker = document.querySelector('.tickerbar');
-  const nav = document.querySelector('.nav');
-  if(!ticker || !nav) return;
-  function onScroll(){
-    const y = window.scrollY;
-    ticker.style.top = y + 'px';
-    nav.style.top = (y + ticker.offsetHeight) + 'px';
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll, {passive:true});
-  onScroll();
-})();
 </script>
 
 <script>
