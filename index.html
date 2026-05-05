@@ -2470,6 +2470,7 @@ root.render(<App />);
 <script>
 (function(){
   const letters = document.querySelectorAll('.hero-title .wave-letter');
+  const accentWrap = document.querySelector('.r-accent-wrap');
   if(!letters.length) return;
 
   const fonts = ['font-bungee','font-bungee-shade','font-mono','font-gothic','font-rampart','font-dot','font-dot'];
@@ -2478,6 +2479,7 @@ root.render(<App />);
 
   function clearAll(){
     letters.forEach(l => l.classList.remove(...allClasses));
+    if(accentWrap) accentWrap.style.transform = 'scale(1)';
   }
 
   function randomFont(){ return fonts[Math.floor(Math.random()*fonts.length)]; }
@@ -2493,6 +2495,10 @@ root.render(<App />);
         l.classList.add(randomFont());
         if(Math.random() < 0.4) l.classList.add(randomStretch());
       });
+      if(accentWrap){
+        const sc = (0.6 + Math.random() * 1.4).toFixed(2);
+        accentWrap.style.transform = 'scale(' + sc + ')';
+      }
       i++;
       setTimeout(frame, 60 + Math.random()*80);
     }
