@@ -386,6 +386,18 @@ button{font:inherit; cursor:pointer; border:none; background:none; color:inherit
   100%  { transform: translate(0); opacity:0; }
 }
 
+/* Tripman character in hero */
+.hero-tripman{
+  position:absolute;
+  bottom: 24px; right: 24px;
+  width: clamp(80px, 12vw, 160px);
+  opacity: .25;
+  mix-blend-mode: multiply;
+  pointer-events:none;
+  image-rendering: pixelated;
+  z-index:2;
+}
+
 .hero-sub{
   margin-top: 28px;
   font-family:"Shrikhand", serif;
@@ -1944,6 +1956,7 @@ footer .copy{
       <a class="btn" href="#visit">VISIT</a>
     </div>
   </div>
+  <img class="hero-tripman" src="assets/tripman2.png" alt="" aria-hidden="true" />
 </section>
 
 <!-- diagonal -->
